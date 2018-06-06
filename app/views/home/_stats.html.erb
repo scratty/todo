@@ -1,0 +1,54 @@
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+var statsArray=<%= @project_tasks.collect do |project_title, tasks|
+    {
+      title: project_title,
+      cols: [{type: 'string', label: 'Status'}, {type: 'number', label: 'Count'}],
+      rows: tasks.group_by {|t| t.status}.collect {|t| [t[0], t[1].length]},
+      div_id: "chart_#{project_title.parameterize}"
+    }
+  end.to_json.html_safe
+%>;
+console.log(statsArray);
+// Load the Visualization API and the corechart package.
+google.charts.load('current', {'packages':['corechart']});
+
+// Set a callback to run when the Google Visualization API is loaded.
+google.charts.setOnLoadCallback(drawChart);
+
+// Callback that creates and populates a data table,
+// instantiates the pie chart, passes in the data and
+// draws it.
+function drawChart() {
+  for(var i=0, len=statsArray.length; i < len; i++){
+    var stat = statsArray[i];
+  // Create the data table.
+  var data = new google.visualization.DataTable();
+  for (var c=0, colLen=stat.cols.length; c < colLen; c++) {
+    data.addColumn(stat.cols[c].type, stat.cols[c].label);
+  }
+  data.addRows(stat.rows);
+
+  // Set chart options
+  var options = {'title':stat.title,
+                  'width':400,
+                  'height':300};
+
+  // Instantiate and draw our chart, passing in some options.
+  var chartDiv = document.createElement('div');
+  chartDiv.id = stat.div_id;
+  chartDiv.class = 'col-md-6';
+  document.getElementById('chart_div_wrapper').appendChild(chartDiv);
+
+  var chart = new google.visualization.PieChart(document.getElementById(stat.div_id));
+    chart.draw(data, options);
+  }
+}
+
+var iDiv = document.createElement('div');
+iDiv.id = 'block';
+
+</script>
+<!--Div that will hold the pie chart-->
+<div id="chart_div_wrapper" class='row'></div>

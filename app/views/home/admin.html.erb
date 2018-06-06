@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-12">
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="developers-tab" data-toggle="tab" href="#developers" role="tab" aria-controls="developers" aria-selected="true">Developers</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="projects-tab" data-toggle="tab" href="#projects" role="tab" aria-controls="projects" aria-selected="false">Projects</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="stats-tab" data-toggle="tab" href="#stats" role="tab" aria-controls="stats" aria-selected="false">Stats</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="developers" role="tabpanel" aria-labelledby="developers-tab">
+    <%= render partial: 'developers' %>
+  </div>
+  <div class="tab-pane fade" id="projects" role="tabpanel" aria-labelledby="projects-tab">
+    <%= render partial: 'projects' %>
+  </div>
+  <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+    <%= render partial: 'stats' %>
+  </div>
+</div>
+</div>
+</div>

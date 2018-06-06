@@ -1,0 +1,11 @@
+<div class="nested-fields">
+    <%= f.input :title %>
+    <% if current_user.has_role? :admin %>
+      <%= f.association :project, include_blank: false, include_hidden: false %>
+    <% end %>
+    <% if current_user.has_role? :admin %>
+      <%= f.association :user, label_method: :email, include_blank: false, include_hidden: false %>
+    <% end %>
+    <%= f.input :status, include_blank: false, include_hidden: false %>
+    <%= link_to_remove_association "remove task", f %>
+</div>

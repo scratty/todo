@@ -1,0 +1,31 @@
+<%= simple_form_for(@project) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="form-inputs">
+        <%= f.input :title %>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h5 class="card-title">Tasks</h5>
+    <div id="tasks" class="card-body">
+      <%= f.simple_fields_for(:tasks) do |tf| %>
+        <%= render 'task_fields', f: tf %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association 'add task', f, :tasks %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="form-actions">
+        <%= f.button :submit %>
+      </div>
+    </div>
+  </div>
+<% end %>
